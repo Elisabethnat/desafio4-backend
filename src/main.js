@@ -25,15 +25,15 @@ const io = new Server(server)
 
 
 
-const storage = multer.diskStorage({
+//const storage = multer.diskStorage({
     destination: (req, file, cb) => { 
-        cb(null, 'src/public/img') 
-    },
+        //cb(null, 'src/public/img') 
+    ////},
     filename: (req, file, cb) => {
-        cb(null, `${Date.now()}${file.originalname}`) 
+        //cb(null, `${Date.now()}${file.originalname}`) 
         
-    }
-})
+    //}
+//})
 
 
 app.use(express.json())
@@ -43,10 +43,10 @@ app.engine('handlebars', engine())
 app.set('view engine', 'handlebars')
 app.set('views', path.resolve(__dirname, './views'))
 
-const upload = multer({ storage: storage })
+//const upload = multer({ storage: storage })
 
 
-io.on("connection", (socket) => {
+io.on("connection", socket => {
     console.log("Conexion con Socket.io")
 
     socket.on('load', async () => {
@@ -72,8 +72,8 @@ app.get('/static', (req, res) => {
 
 })
  
-app.get('/static/realTimeProducts', (req, res) =>{
-    res.render('realTimeProducts',{
+app.get('/static/realTimeProducts', (req, res) => {
+    res.render('realTimeProducts', {
         rutaCSS: 'realTimeProducts',
         rutaJS:'realTimeProducts',
     })
