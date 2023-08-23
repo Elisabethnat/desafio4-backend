@@ -7,7 +7,7 @@ const routeCart = Router();
 
 routeCart.post('/', async (req, res) => {
     const newCart = await cartManager.createcart();
-    res.status(201).json(newcart.id);
+    res.status(201).json(newcart);
 
 });
 
@@ -15,13 +15,23 @@ routerCart.get('/:cid', async (req, res) => {
     const { cid } = req.params;
     const cart = await cartmanager.getCarById(cid);
 
-if (cart) {
-    res.status(200).send(cart);
+if (carts.length === 0) {
+    res.status(404).send("No hay carritos creados");
 
 } else {
-    res.status(404).send("carrito no encontrado");
+    res.status(200).json(carts);
 }
 });
+
+routerCart.get('/:cid', async (req, res) => {
+    const { cid } = req.params;
+    const cart = await cartManager.getCartById(cid);
+    if(cart){
+        res.status(200).send(cart);
+    } else {
+        res.status(404).send("Carrito no encontrado")
+    }
+})
 
 
 routerCart.delete('/:cid, async (req, res) => { 
@@ -42,7 +52,7 @@ routerCart.post('/:cid/product/:pid', async (req, res) => {
     const { cid, pid } = req.params;
     const { quantity } = req. body;
 
-    const sucess = await cartManager.addProductToCart(cid, pid, quantity);
+    const success = await cartManager.addProductToCart(cid, pid, quantity);
     if (success) {
         res.status(201).send("Producto agregado al carrito correctamente");
 
